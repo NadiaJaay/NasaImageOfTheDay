@@ -10,47 +10,64 @@
     tools:context=".ImageActivity">
 
     <TextView
-        android:id="@+id/todayDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/imageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/todayDate" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textFontWeight="700"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/todayDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageTitle"
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/todayImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/navTodayImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageTitle" />
 
     <TextView
-        android:id="@+id/hdImageUrl"
+        android:id="@+id/viewHDBrowserLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autoLink="web"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/saveBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/todayImage" />
 
-    <TextView
-        android:id="@+id/sdImageUrl"
+    <ImageButton
+        android:id="@+id/downloadBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
+        android:contentDescription="@string/downloadImage"
+        android:visibility="gone"
+        android:padding="12dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/download"
+        app:layout_constraintEnd_toStartOf="@+id/saveBtn"
+        app:layout_constraintTop_toBottomOf="@id/todayImage" />
+
+    <ImageButton
+        android:id="@+id/saveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:contentDescription="@string/saveDate"
+        android:visibility="gone"
+        android:padding="12dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/heart_outline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hdImageUrl"
-        app:layout_constraintTop_toBottomOf="@+id/todayImage" />
-
-
+        app:layout_constraintTop_toBottomOf="@id/todayImage" />
 
     <TextView
         android:id="@+id/explanation"
@@ -58,13 +75,25 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hdImageUrl" />
+        app:layout_constraintTop_toBottomOf="@+id/saveBtn"
+        android:layout_marginTop="10dp"/>
 
-<!--    <ImageButton-->
-<!--        android:id="@+id/saveBtn"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        -->
-<!--        />-->
+    <TextView
+        android:id="@+id/viewSDBrowserLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/explanation"
+        android:layout_marginTop="20dp"/>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminate="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
