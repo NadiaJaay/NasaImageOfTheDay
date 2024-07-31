@@ -18,11 +18,19 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/activity_content"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/activity_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+
+        </ScrollView>
+
+
 
     </LinearLayout>
 
