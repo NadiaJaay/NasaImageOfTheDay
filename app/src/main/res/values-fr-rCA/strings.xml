@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Image du jour de NASA</string>
+    <string name="dialogNeutralBtn">OK</string>
+
+    <!--    Navigation Drawer -->
+    <string name="navHome">Accueil</string>
+    <string name="navSavedImages">Vos images</string>
+    <string name="navExit">Quitter</string>
+    <string name="open">ouvrir</string>
+    <string name="close">fermer</string>
+
+    <!--  Toolbar  -->
+    <string name="navTodayImage">Image du jour</string>
+    <string name="navHelp">Aide</string>
+    <string name="imageActivityDateTitle">Image de </string>
+
+    <!--  Image Activity  -->
+    <string name="viewHDInBrowser">Voir dans votre navigateur</string>
+    <string name="downloadImage">Télécharger l\'image</string>
+    <string name="saveDate">Sauvegarder la date</string>
+    <string name="troubleViewingText">Difficulté à voir l\'image?</string>
+    <string name="viewSDInBrowser">Voyez la en faible résolution</string>
+
+    <!--  Image Activity Dialog  -->
+    <string name="downloadImageDialogTitle">Nommez l\'image: </string>
+    <string name="helpImageDialogTitle">Aide | Activité Image</string>
+    <string name="helpImageDialogMessage">Cette page présente le titre, l\'image, et une courte description d\'une image prise par la NASA à la date choisie.  Clique sur le lien pour ouvrir l\'image dans votre navigateur, télécharchez l\'image sur votre appareil en cliquant l\'icône "télécharger", ou sauvegardez la page pour plus tard en cliquant sur le coeur.</string>
+    <string name="dialogPosBtn">Sauvegarder</string>
+    <string name="dialogNegBtn">Annuler</string>
+    <string name="fileDownloaded">Image téléchargée sur l\'appareil.</string>
+    <string name="fileExists">Un document existe déjà avec ce nom.</string>
+    <string name="fileDownloadError">Impossible de télécharger l\'image. Essayez de nouveau.</string>
+    <string name="fileNameHint">Nommez votre image</string>
+
+    <!--  Home Activity Dialog  -->
+    <string name="homeDialogTitle">Aide | Activité Accueil</string>
+    <string name="homeDialogMessage">Bienvenue à la page principale</string>
+
+    <!--  Saved Images Activity  -->
+    <string name="savedImagesActivityTitle">Vos images</string>
+</resources>

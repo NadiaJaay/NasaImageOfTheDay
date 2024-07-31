@@ -1,9 +1,41 @@
 <resources>
-    <string name="app_name">Nasa Image Of The Day</string>
+    <string name="app_name">NASA\'s Image Of The Day</string>
+    <string name="dialogNeutralBtn">OK</string>
+
+    <!--    Navigation Drawer -->
     <string name="navHome">Home</string>
-    <string name="navTodayImage">Today\'s Image</string>
     <string name="navSavedImages">Your Saved Images</string>
     <string name="navExit">Exit</string>
     <string name="open">open</string>
     <string name="close">close</string>
+
+    <!--    Toolbar -->
+    <string name="navTodayImage">Today\'s Image</string>
+    <string name="navHelp">Help</string>
+    <string name="imageActivityDateTitle">Image From</string>
+
+    <!--    Image Activity -->
+    <string name="viewHDInBrowser">View image in browser</string>
+    <string name="downloadImage">Download Image</string>
+    <string name="saveDate">Save Date</string>
+    <string name="troubleViewingText">Having trouble viewing image?</string>
+    <string name="viewSDInBrowser">See in lower resolution</string>
+
+    <!--    Image Activity Alert Dialog -->
+    <string name="downloadImageDialogTitle">Name your image file: </string>
+    <string name="helpImageDialogTitle">Help | Image Activity</string>
+    <string name="helpImageDialogMessage">This page displays the title, image, and a short description of an image taken by NASA from the given day. Click the link to view the image in your browser, download the image to your device by clicking the download icon, or save the post for later by clicking the heart icon.</string>
+    <string name="dialogPosBtn">Save</string>
+    <string name="dialogNegBtn">Cancel</string>
+    <string name="fileDownloaded">Downloaded image to device.</string>
+    <string name="fileExists">A file with that name already exists.</string>
+    <string name="fileDownloadError">Could not download image onto device. Please try again.</string>
+    <string name="fileNameHint">Name your image</string>
+
+    <!--  Home Activity Dialog  -->
+    <string name="homeDialogTitle">Help | Home Activity</string>
+    <string name="homeDialogMessage">Welcome to the Home Page</string>
+
+    <!--  Saved Images Activity  -->
+    <string name="savedImagesActivityTitle">Your Saved Images</string>
 </resources>
