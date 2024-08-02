@@ -18,9 +18,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.time.LocalDate;
-
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private FrameLayout activityContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void setContentView(int layoutResID) {
         DrawerLayout fullView = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
-        FrameLayout activityContainer = fullView.findViewById(R.id.activity_content);
+        activityContainer = fullView.findViewById(R.id.activity_content);
         getLayoutInflater().inflate(layoutResID, activityContainer, true);
         super.setContentView(fullView);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -50,15 +49,37 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    protected boolean useToolbar() {return true;}
+    protected FrameLayout getActivityContainer() {return activityContainer;}
+
+    protected boolean useToolbar() {
+        return true;
+    }
+
+    private void clearFlags(Intent intent) {intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);}
 
     // Navigation Menu Item selection handler
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.navSavedImages) {
-            if (!(this instanceof SavedImagesActivity)) startActivity(new Intent(this, SavedImagesActivity.class));
+        if (id == R.id.navHome) {
+            if (!(this instanceof MainActivity)) {
+                Intent intent = new Intent(this, MainActivity.class);
+                clearFlags(intent);
+                startActivity(intent);
+            }
+        } else if (id == R.id.navSavedImages) {
+            if (!(this instanceof SavedImagesActivity)) {
+                Intent intent = new Intent(this, SavedImagesActivity.class);
+                clearFlags(intent);
+                startActivity(intent);
+            }
+        } else if (id == R.id.navSavedDates) {
+            if (!(this instanceof SavedDatesActivity)) {
+                Intent intent = new Intent(this, SavedDatesActivity.class);
+                clearFlags(intent);
+                startActivity(intent);
+            }
         } else if (id == R.id.navExit) {
             finishAffinity();
         }
@@ -67,7 +88,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

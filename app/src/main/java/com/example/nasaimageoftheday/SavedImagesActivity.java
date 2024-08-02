@@ -3,8 +3,8 @@ package com.example.nasaimageoftheday;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,15 +12,23 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SavedImagesActivity extends BaseActivity {
-    private final ArrayList<Bitmap> pictureList = new ArrayList<>();
+    private final Map<File, Bitmap> pictureList = new HashMap<>();
+    private final ArrayList<Map.Entry<File, Bitmap>> data = new ArrayList<>();
     MyListAdapter adapter;
 
     @Override
@@ -44,23 +52,57 @@ public class SavedImagesActivity extends BaseActivity {
         for (int i = 1; i < pictureFiles.length; i++) {
             File file = new File(getFilesDir(), pictureFiles[i]);
             Bitmap picture = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+            // Add picture if it is decoded
             if (picture != null) {
-                pictureList.add(picture);
-            } else {
-                Log.e("SavedImagesActivity", "Failed to decode image: " + file.getAbsolutePath());
+                pictureList.put(file, picture);
             }
         }
+        // Add all HashMap entries to the ArrayList, then sort the array by last date modified.
+        data.addAll(pictureList.entrySet());
+        data.sort(Comparator.comparingLong(a -> a.getKey().lastModified()));
 
-
+        // Set the adapter for the GridView
         gridView.setAdapter(adapter = new MyListAdapter());
+
+        // On Click Listener
+        gridView.setOnItemClickListener((p, b, pos, id) -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(data.get(pos).getKey().getName())
+                    .setMessage(getString(R.string.savedImageDate)+" "+ new Date(data.get(pos).getKey().lastModified())+"\n"
+                    +getString(R.string.savedImageSize)+" "+getFileSizeKilobytes(data.get(pos).getKey()))
+                    .setNeutralButton(R.string.dialogNeutralBtn, (click, arg) -> {})
+                    .create().show();
+        });
+
+        // On Long Click Listener
+        // Create an alert dialog to delete the file.
+        gridView.setOnItemLongClickListener((p, b, pos, id) -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(R.string.deleteImageTitle)
+                    // If the user deletes an image, then delete the image from internal storage, then remove from arrayList and HashMap.
+                    // Then notify the adapter
+                    .setPositiveButton(R.string.dialogPosDelBtn, (click, arg) -> {
+                        File file = data.get(pos).getKey();
+                        file.delete();
+                        pictureList.remove(file);
+                        data.remove(pos);
+                        adapter.notifyDataSetChanged();
+                    })
+                    .setNegativeButton(R.string.dialogNegBtn, (click, arg) -> {})
+                    .create().show();
+            return false;
+        });
     }
 
     private class MyListAdapter extends BaseAdapter {
-        @Override
-        public int getCount() {return pictureList.size();}
 
         @Override
-        public Bitmap getItem(int position) {return pictureList.get(position);}
+        public int getCount() {return data.size();}
+
+        // Get the HashMap entry from the ArrayList
+        @Override
+        public Map.Entry<File, Bitmap> getItem(int position) {return data.get(position);}
 
         @Override
         public long getItemId(int position) {return position;}
@@ -72,13 +114,35 @@ public class SavedImagesActivity extends BaseActivity {
 
             if (newView == null) {
                 newView = inflater.inflate(R.layout.picture_layout, parent, false);
+                // Find the ImageView and set it to the Bitmap entry value.
+                ImageView imageView = newView.findViewById(R.id.imageView);
+                imageView.setImageBitmap(getItem(position).getValue());
             }
 
-            ImageView imageView = newView.findViewById(R.id.imageView);
-            imageView.setImageBitmap(getItem(position));
+
 
             return newView;
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.navTodayImage) {
+            super.onOptionsItemSelected(item);
+        } else if (id == R.id.navHelp) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(getString(R.string.savedImagesDialogTitle))
+                    .setMessage(getString(R.string.savedImagesDialogMessage))
+                    .setNeutralButton(R.string.dialogNeutralBtn, (click, arg) -> {})
+                    .create().show();
+        }
+
+        return true;
+    }
+
+    private String getFileSizeKilobytes(File file) {
+        return new BigDecimal(file.length() / 1024).setScale(2, RoundingMode.HALF_UP) + " kb";
     }
 }
