@@ -40,7 +40,7 @@
     <string name="pickADate">Choisissez une date afin de voir l\'image du jour: </string>
     <string name="noResultFound">Impossible de trouver l\'image pour la date choisie</string>
     <string name="homeDialogTitle">Aide | Activité Accueil</string>
-    <string name="homeDialogMessage">Bienvenue à la page principale</string>
+    <string name="homeDialogMessage">Bienvenue à la page principale. Choisissez une date sur le calendrier et cliquez "Confirmer" afin de voir l\'image pour la date choisie de la NASA.</string>
 
     <!--  Saved Images Activity  -->
     <string name="savedImagesActivityTitle">Vos images</string>

@@ -51,7 +51,7 @@ public class ImageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image);
+        setContentView(R.layout.activity_image); // Overriden by BaseActivity
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -100,12 +100,14 @@ public class ImageActivity extends BaseActivity {
             return false;
         });
 
+        // TODO: Create functionality for "Save Date" button (this is the heart)
         saveBtn.setOnClickListener(click -> {
 
         });
 
-        // If download button is clicked...
+        // If "download image" button is clicked...
         downloadBtn.setOnClickListener(c -> {
+            // Get the default file name + extension
             String fileName = hdUrl.substring(hdUrl.lastIndexOf("/")+1);
             String fileExtension = fileName.substring(fileName.lastIndexOf(".")+1);
 
@@ -127,10 +129,11 @@ public class ImageActivity extends BaseActivity {
                         // Find if file exists...
                         File file = new File(getFilesDir(), inputFileName);
 
-                        // If file does not exist, then save to internal storage.
+                        // If file does not exist, then save to internal storage. Otherwise, display a toast to say it already exists.
                         if (!file.exists()) {
                             String temp = (fileExtension.equalsIgnoreCase("JPG")) ? "JPEG" : fileExtension.toUpperCase();
                             try {
+                                // Save the file and compress the image, then close the output stream.
                                 FileOutputStream outputStream = openFileOutput(inputFileName, Context.MODE_PRIVATE);
                                 currentPic.compress(Bitmap.CompressFormat.valueOf(temp), 80, outputStream);
 
@@ -142,22 +145,24 @@ public class ImageActivity extends BaseActivity {
                                         .setAction("Undo", click -> file.delete())
                                         .show();
                             } catch (IOException e) {
-                                Toast.makeText(ImageActivity.this, getResources().getString(R.string.fileExists), Toast.LENGTH_LONG).show();
-                                throw new RuntimeException(e);
+                                // If error in saving, display toast with error.
+                                Toast.makeText(ImageActivity.this, getResources().getString(R.string.fileDownloadError), Toast.LENGTH_LONG).show();
                             }
 
                         } else {
                             Toast.makeText(ImageActivity.this, getResources().getString(R.string.fileExists), Toast.LENGTH_LONG).show();
                         }
                     })
+
                     .setNegativeButton(R.string.dialogNegBtn, (click, arg) -> {})
                     .create().show();
-
 
         });
 
 
-        // This will replace the AsyncTask (doInBackground) that we learned in Lab 6
+        /* This replaces AsyncTask (doInBackground) that we learned in Lab 6
+         * Uses a Single Thread Executor instead
+         */
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
@@ -244,6 +249,7 @@ public class ImageActivity extends BaseActivity {
         }
     }
 
+    // Override the toolbar menu options selection to change the behaviour of the "Help" button.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
