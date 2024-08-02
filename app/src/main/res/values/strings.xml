@@ -39,7 +39,7 @@
     <string name="pickADate">Pick a date to view its image: </string>
     <string name="noResultFound">Could not find image for selected day</string>
     <string name="homeDialogTitle">Help | Home Activity</string>
-    <string name="homeDialogMessage">Welcome to the Home Page</string>
+    <string name="homeDialogMessage">Welcome to the Home Page. Select a day on the calendar and click "Confirm" to see the selected date\'s image from NASA.</string>
 
     <!--  Saved Images Activity  -->
     <string name="savedImagesActivityTitle">Your Saved Images</string>

@@ -35,7 +35,7 @@ public class SavedImagesActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_saved_images);
+        setContentView(R.layout.activity_saved_images); // Overriden by BaseActivity
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -44,10 +44,14 @@ public class SavedImagesActivity extends BaseActivity {
 
         // Declare Views
         GridView gridView = findViewById(R.id.gridView);
+        // Update title on Toolbar
         if (getSupportActionBar() != null) getSupportActionBar().setTitle(this.getResources().getString(R.string.savedImagesActivityTitle));
 
 
-        // Get images from internal storage
+        /* Get images from internal storage
+         * For each image in list (start at item 1, the first item is the app logo?), decode the picture
+         * Then, add the picture to a HashMap<File, Bitmap>
+         */
         String[] pictureFiles = getApplicationContext().fileList();
         for (int i = 1; i < pictureFiles.length; i++) {
             File file = new File(getFilesDir(), pictureFiles[i]);
@@ -58,14 +62,19 @@ public class SavedImagesActivity extends BaseActivity {
                 pictureList.put(file, picture);
             }
         }
-        // Add all HashMap entries to the ArrayList, then sort the array by last date modified.
+        // Add all HashMap entries to the ArrayList, then sort the array by last date modified (oldest image first).
+        // TODO: Make it newest image first? (optional)
         data.addAll(pictureList.entrySet());
         data.sort(Comparator.comparingLong(a -> a.getKey().lastModified()));
 
         // Set the adapter for the GridView
         gridView.setAdapter(adapter = new MyListAdapter());
 
-        // On Click Listener
+        /* On Click Listener
+         * Show and alert dialog with the date the image was saved, and the file size.
+         * TODO: Show the image in a new activity with those details instead? (optional)
+         *
+         */
         gridView.setOnItemClickListener((p, b, pos, id) -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle(data.get(pos).getKey().getName())
@@ -75,8 +84,10 @@ public class SavedImagesActivity extends BaseActivity {
                     .create().show();
         });
 
-        // On Long Click Listener
-        // Create an alert dialog to delete the file.
+        /* On Long Click Listener
+         * Create an alert dialog to delete the file.
+         *
+         */
         gridView.setOnItemLongClickListener((p, b, pos, id) -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle(R.string.deleteImageTitle)
@@ -95,6 +106,7 @@ public class SavedImagesActivity extends BaseActivity {
         });
     }
 
+    // Adapter for GridView
     private class MyListAdapter extends BaseAdapter {
 
         @Override
@@ -112,20 +124,23 @@ public class SavedImagesActivity extends BaseActivity {
             View newView = old;
             LayoutInflater inflater = getLayoutInflater();
 
+            // Find the ImageView from picture_layout.xml and set it to the Bitmap entry value.
             if (newView == null) {
                 newView = inflater.inflate(R.layout.picture_layout, parent, false);
-                // Find the ImageView and set it to the Bitmap entry value.
+
                 ImageView imageView = newView.findViewById(R.id.imageView);
                 imageView.setImageBitmap(getItem(position).getValue());
             }
-
-
 
             return newView;
         }
 
     }
 
+    /* Override toolbar item selection to update the "Help" button
+     * Since the Activity is different from the ImageActivity, the "today's image" button should still work.
+     * Call the super() version of the method to access that.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -142,6 +157,7 @@ public class SavedImagesActivity extends BaseActivity {
         return true;
     }
 
+    // Small utility method to retrieve the file size in Kilobytes. Uses BigDecimal and rounds the number to 2 decimal places.
     private String getFileSizeKilobytes(File file) {
         return new BigDecimal(file.length() / 1024).setScale(2, RoundingMode.HALF_UP) + " kb";
     }
