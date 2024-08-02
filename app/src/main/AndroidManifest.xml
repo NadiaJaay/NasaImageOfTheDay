@@ -15,6 +15,9 @@
         android:theme="@style/Theme.NasaImageOfTheDay"
         tools:targetApi="31">
         <activity
+            android:name=".SavedDatesActivity"
+            android:exported="false" />
+        <activity
             android:name=".SavedImagesActivity"
             android:exported="false" />
         <activity

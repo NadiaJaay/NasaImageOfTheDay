@@ -119,7 +119,7 @@ public class ImageActivity extends BaseActivity {
                     .setView(editText)
 
                     // If the user clicks "Save"...
-                    .setPositiveButton(R.string.dialogPosBtn, (dialog, btn) -> {
+                    .setPositiveButton(R.string.dialogPosSaveBtn, (dialog, btn) -> {
 
                         // Get the name in the EditText
                         String inputFileName = editText.getText().toString();
@@ -138,7 +138,7 @@ public class ImageActivity extends BaseActivity {
                                 outputStream.close();
 
                                 // Show a SnackBar. If they click "Undo", delete the file we just created.
-                                Snackbar.make(ImageActivity.this.getCurrentFocus(), getResources().getString(R.string.fileDownloaded), Snackbar.LENGTH_LONG)
+                                Snackbar.make(getActivityContainer(), getResources().getString(R.string.fileDownloaded), Snackbar.LENGTH_LONG)
                                         .setAction("Undo", click -> file.delete())
                                         .show();
                             } catch (IOException e) {
@@ -189,7 +189,6 @@ public class ImageActivity extends BaseActivity {
                 // Retrieve the JSON results
                 String result = sb.toString();
                 JSONObject jsonObject = new JSONObject(result);
-                Log.i("MainActivity", "JSON Result: " + jsonObject);
 
                 // Get the different values from the JSON object
                 explanation = jsonObject.getString("explanation");
@@ -209,7 +208,9 @@ public class ImageActivity extends BaseActivity {
                 response.close();
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                setResult(0, getIntent());
+                finish();
+                return;
             }
 
             // Once the API info is done being downloaded, display everything
