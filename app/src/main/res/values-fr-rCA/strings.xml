@@ -52,4 +52,13 @@
     <string name="savedImagesDialogMessage">Trouvez une liste de vos images sauvegardées. Appuyez sur une image afin de voir les détails. Tenez votre doigt sur l\'image pour l\'effacer.</string>
     <string name="deleteImageTitle">Effacer cet image?</string>
     <string name="dialogPosDelBtn">Effacer</string>
+
+    <!--  Saved date Dialog  -->
+    <string name="delete_date">Supprimer la date</string>
+    <string name="delete_date_confirmation">Êtes-vous sûr de vouloir supprimer cette date ?</string>
+    <string name="delete">Supprimer</string>
+    <string name="cancel">Annuler</string>
+    <string name="savedDatesDialogMessage">Trouvez une liste de toutes vos dates enregistrées ici. Maintenez votre doigt sur la date à supprimer de votre appareil</string>
+    <string name="savedDateDialogTitle">Aide | Activité des dates enregistrées</string>
+
 </resources>

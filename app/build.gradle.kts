@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -54,7 +55,7 @@ secrets {
 
     // A properties file containing default secret values. This file can be
     // checked in version control.
-    defaultPropertiesFileName = "local.defaults.properties"
+    //defaultPropertiesFileName = "local.defaults.properties"
 
     // Configure which keys should be ignored by the plugin by providing regular expressions.
     // "sdk.dir" is ignored by default.

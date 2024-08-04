@@ -1,11 +1,13 @@
 package com.example.nasaimageoftheday;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -100,8 +102,12 @@ public class ImageActivity extends BaseActivity {
             return false;
         });
 
-        // TODO: Create functionality for "Save Date" button (this is the heart)
+        // Created functionality for "Save Date" button (this is the heart)
         saveBtn.setOnClickListener(click -> {
+            String imageTitle = titleText.getText().toString();
+            String imageDate = date.toString();
+            saveDate(imageTitle, imageDate);
+            Toast.makeText(this, "Date saved!", Toast.LENGTH_SHORT).show();
 
         });
 
@@ -247,6 +253,20 @@ public class ImageActivity extends BaseActivity {
         } else {
             loading.setVisibility(View.GONE);
         }
+    }
+
+    //TODO: SaveDate Method - modify to use database
+    private void saveDate(String title, String date){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        String existingDates = prefs.getString("saved_dates", "");
+        if (!existingDates.isEmpty()){
+            existingDates += ",";
+        }
+        existingDates += title + ":" + date;
+        editor.putString("saved_dates", existingDates);
+        editor.apply();
+
     }
 
     // Override the toolbar menu options selection to change the behaviour of the "Help" button.
