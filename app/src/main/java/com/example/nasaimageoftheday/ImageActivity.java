@@ -1,7 +1,10 @@
 package com.example.nasaimageoftheday;
+import android.content.ContentValues;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -93,22 +96,10 @@ public class ImageActivity extends BaseActivity {
 
 
         // If Long Clicked, display a toast with a description of what it does
-        saveBtn.setOnLongClickListener(click -> {
-            Toast.makeText(this, getResources().getString(R.string.saveDate), Toast.LENGTH_SHORT).show();
-            return false;
-        });
+
         downloadBtn.setOnLongClickListener(click -> {
             Toast.makeText(this, getResources().getString(R.string.downloadImage), Toast.LENGTH_SHORT).show();
             return false;
-        });
-
-        // Created functionality for "Save Date" button (this is the heart)
-        saveBtn.setOnClickListener(click -> {
-            String imageTitle = titleText.getText().toString();
-            String imageDate = date.toString();
-            saveDate(imageTitle, imageDate);
-            Toast.makeText(this, "Date saved!", Toast.LENGTH_SHORT).show();
-
         });
 
         // If "download image" button is clicked...
@@ -164,6 +155,26 @@ public class ImageActivity extends BaseActivity {
                     .create().show();
 
         });
+
+        saveBtn.setOnLongClickListener(click -> {
+            Toast.makeText(this, getResources().getString(R.string.saveDate), Toast.LENGTH_SHORT).show();
+            return false;
+        });
+
+        // Created functionality for "Save Date" button (this is the heart)
+        saveBtn.setOnClickListener(click -> {
+            String imageTitle = titleText.getText().toString();
+            String imageDate = date.toString();
+            if ( saveDate(imageTitle, imageDate) == 0 ) {
+                Toast.makeText(this, "Date saved!", Toast.LENGTH_SHORT).show();
+            } else if ( saveDate(imageTitle, imageDate) == 1 ) {
+                Toast.makeText(this, "Date was already saved!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "An unknown error occurred!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
 
 
         /* This replaces AsyncTask (doInBackground) that we learned in Lab 6
@@ -255,18 +266,34 @@ public class ImageActivity extends BaseActivity {
         }
     }
 
-    //TODO: SaveDate Method - modify to use database
-    private void saveDate(String title, String date){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        String existingDates = prefs.getString("saved_dates", "");
-        if (!existingDates.isEmpty()){
-            existingDates += ",";
-        }
-        existingDates += title + ":" + date;
-        editor.putString("saved_dates", existingDates);
-        editor.apply();
+    private int saveDate(String title, String date){
 
+        // Create a db helper
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Find out if the date is already saved
+        try (Cursor c = db.rawQuery("SELECT Count(*) FROM " + DBHelper.TABLE_NAME
+                        + " WHERE " + DBHelper.COL_DATE + " = '" + date + "'",
+                null)) {
+            c.moveToFirst();
+            if (c.getCount() > 0) {
+                int dateAlreadyExists = c.getInt(0);
+                if (dateAlreadyExists != 0) {
+                    return 1;   // The date already exists, so return 1
+                }
+            } else {
+                return 2; // Something else went wrong
+            }
+        }
+
+        // Otherwise, save the date and then return true
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COL_DATE, date);
+        contentValues.put(DBHelper.COL_TITLE, title);
+        long newID = db.insert(DBHelper.TABLE_NAME, null, contentValues);
+        dbHelper.close();                               // Close connection to DB
+        return 0;
     }
 
     // Override the toolbar menu options selection to change the behaviour of the "Help" button.

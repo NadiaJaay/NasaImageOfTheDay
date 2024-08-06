@@ -1,6 +1,9 @@
 package com.example.nasaimageoftheday;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -25,6 +28,7 @@ import java.util.List;
 public class SavedDatesActivity extends BaseActivity {
     private final List<SavedDate> savedDates = new ArrayList<>();
     private MyListAdapter adapter;
+    static final int DATE_REQUEST = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +61,16 @@ public class SavedDatesActivity extends BaseActivity {
         // On Click Listener
         listView.setOnItemClickListener((parent, view, position, id) -> {
             SavedDate selectedDate = savedDates.get(position);
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle(selectedDate.getTitle())
-                    .setMessage(getString(R.string.savedImageDate) + " " + selectedDate.getDate())
-                    .setNeutralButton(R.string.dialogNeutralBtn, (click, arg) -> {})
-                    .create().show();
+
+            Intent intent = new Intent(this, ImageActivity.class);
+            intent.putExtra("date", selectedDate.getDate());
+            startActivityIfNeeded(intent, DATE_REQUEST);
+
+//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//            alertDialogBuilder.setTitle(selectedDate.getTitle())
+//                    .setMessage(getString(R.string.savedImageDate) + " " + selectedDate.getDate())
+//                    .setNeutralButton(R.string.dialogNeutralBtn, (click, arg) -> {})
+//                    .create().show();
         });
 
         // On Long Click Listener
@@ -78,22 +87,40 @@ public class SavedDatesActivity extends BaseActivity {
     }
 
     private void loadSavedDates() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String savedDatesString = prefs.getString("saved_dates", "");
-        if (!savedDatesString.isEmpty()) {
-            String[] datesArray = savedDatesString.split(",");
-            for (String dateEntry : datesArray) {
-                String[] parts = dateEntry.split(":");
-                if (parts.length == 2) {
-                    savedDates.add(new SavedDate(parts[0], parts[1]));
-                }
+
+
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+
+        try (Cursor c = db.rawQuery("Select * FROM " + DBHelper.TABLE_NAME, null)) {
+
+            c.moveToFirst();
+            if (c.getCount() > 0) {
+                do {
+                    String date = c.getString(0);
+                    String title = c.getString(1);
+                    savedDates.add(new SavedDate(title, date));
+                } while (c.moveToNext());
             }
         }
+
     }
 
     private void deleteDate(int position) {
+        SavedDate savedDate = savedDates.get(position);
+        String date = savedDate.getDate();
         savedDates.remove(position);
-        saveDatesToPreferences();
+
+        // Create a db helper
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        db.delete(
+            DBHelper.TABLE_NAME,
+            DBHelper.COL_DATE + " = ?", new String[] {date}
+        );
+
         adapter.notifyDataSetChanged();
     }
 
