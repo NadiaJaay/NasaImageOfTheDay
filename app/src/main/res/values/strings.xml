@@ -2,6 +2,7 @@
     <string name="app_name">NASA\'s Image Of The Day</string>
     <string name="dialogNeutralBtn">OK</string>
     <string name="btnConfirm">Confirm</string>
+    <string name="versionNumber">version number: v</string>
 
     <!--    Navigation Drawer -->
     <string name="navHome">Home</string>
@@ -22,6 +23,9 @@
     <string name="saveDate">Save Date</string>
     <string name="troubleViewingText">Having trouble viewing image?</string>
     <string name="viewSDInBrowser">See in lower resolution</string>
+    <string name="dateSaved">Date Saved!</string>
+    <string name="dateAlreadySaved">Date was already saved!</string>
+    <string name="error">An unknown error occurred!</string>
 
     <!--    Image Activity Alert Dialog -->
     <string name="downloadImageDialogTitle">Name your image file: </string>
