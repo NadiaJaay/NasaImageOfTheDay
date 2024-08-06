@@ -2,7 +2,6 @@ package com.example.nasaimageoftheday;
 import android.content.ContentValues;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -10,10 +9,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -166,11 +163,11 @@ public class ImageActivity extends BaseActivity {
             String imageTitle = titleText.getText().toString();
             String imageDate = date.toString();
             if ( saveDate(imageTitle, imageDate) == 0 ) {
-                Toast.makeText(this, "Date saved!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.dateSaved), Toast.LENGTH_SHORT).show();
             } else if ( saveDate(imageTitle, imageDate) == 1 ) {
-                Toast.makeText(this, "Date was already saved!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.dateAlreadySaved), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "An unknown error occurred!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -291,7 +288,7 @@ public class ImageActivity extends BaseActivity {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COL_DATE, date);
         contentValues.put(DBHelper.COL_TITLE, title);
-        long newID = db.insert(DBHelper.TABLE_NAME, null, contentValues);
+        db.insert(DBHelper.TABLE_NAME, null, contentValues);
         dbHelper.close();                               // Close connection to DB
         return 0;
     }

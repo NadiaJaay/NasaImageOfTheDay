@@ -1,5 +1,6 @@
 package com.example.nasaimageoftheday;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -30,6 +32,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
      * Takes the activity_base.xml and inflates all other activities to create a toolbar + navigation drawer
      * Reduces redundancy in other Activity classes
      */
+
     @Override
     public void setContentView(int layoutResID) {
         DrawerLayout fullView = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
@@ -51,6 +54,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
             NavigationView navView = findViewById(R.id.navView);
             navView.setNavigationItemSelectedListener(this);
+            TextView versionNumber = findViewById(R.id.versionNumber);
+            versionNumber.setText(String.format("%s%d", getString(R.string.versionNumber), DBHelper.VERSION_NUM));
+
         } else {
             toolbar.setVisibility(View.GONE);
         }

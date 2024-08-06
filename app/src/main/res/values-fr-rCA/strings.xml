@@ -3,6 +3,7 @@
     <string name="app_name">Image du jour de NASA</string>
     <string name="dialogNeutralBtn">OK</string>
     <string name="btnConfirm">Confirmer</string>
+    <string name="versionNumber">numéro de version: v</string>
 
     <!--    Navigation Drawer -->
     <string name="navHome">Accueil</string>
@@ -23,6 +24,9 @@
     <string name="saveDate">Sauvegarder la date</string>
     <string name="troubleViewingText">Difficulté à voir l\'image?</string>
     <string name="viewSDInBrowser">Voyez la en faible résolution</string>
+    <string name="dateSaved">Date sauvegardée!</string>
+    <string name="dateAlreadySaved">Date déjà sauvegardée!</string>
+    <string name="error">Une erreur est survenue!</string>
 
     <!--  Image Activity Dialog  -->
     <string name="downloadImageDialogTitle">Nommez l\'image: </string>

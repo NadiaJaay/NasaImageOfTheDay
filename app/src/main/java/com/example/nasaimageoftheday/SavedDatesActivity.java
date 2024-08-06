@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -77,9 +76,7 @@ public class SavedDatesActivity extends BaseActivity {
         listView.setOnItemLongClickListener((parent, view, position, id) -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle(R.string.delete_date)
-                    .setPositiveButton(R.string.delete, (click, arg) -> {
-                        deleteDate(position);
-                    })
+                    .setPositiveButton(R.string.delete, (click, arg) -> deleteDate(position))
                     .setNegativeButton(R.string.cancel, null)
                     .create().show();
             return true;
@@ -88,12 +85,10 @@ public class SavedDatesActivity extends BaseActivity {
 
     private void loadSavedDates() {
 
-
-        DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-
-        try (Cursor c = db.rawQuery("Select * FROM " + DBHelper.TABLE_NAME, null)) {
+        try (DBHelper dbHelper = new DBHelper(this);
+             SQLiteDatabase db = dbHelper.getWritableDatabase();
+            Cursor c = db.rawQuery("Select * FROM " + DBHelper.TABLE_NAME, null)
+        ) {
 
             c.moveToFirst();
             if (c.getCount() > 0) {
@@ -112,18 +107,17 @@ public class SavedDatesActivity extends BaseActivity {
         String date = savedDate.getDate();
         savedDates.remove(position);
 
-        // Create a db helper
-        DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        db.delete(
-            DBHelper.TABLE_NAME,
-            DBHelper.COL_DATE + " = ?", new String[] {date}
-        );
-
+        try (DBHelper dbHelper = new DBHelper(this)) {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.delete(
+                    DBHelper.TABLE_NAME,
+                    DBHelper.COL_DATE + " = ?", new String[] {date}
+            );
+        }
         adapter.notifyDataSetChanged();
     }
 
+    // Todo: Setting own API key things?
     private void saveDatesToPreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
