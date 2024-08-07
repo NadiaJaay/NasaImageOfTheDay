@@ -60,5 +60,10 @@
     <string name="cancel">Annuler</string>
     <string name="savedDatesDialogMessage">Trouvez une liste de toutes vos dates enregistrées ici. Maintenez votre doigt sur la date à supprimer de votre appareil</string>
     <string name="savedDateDialogTitle">Aide | Activité des dates enregistrées</string>
+    <string name="navApiSetting">Paramètres API</string>
+    <string name="use_default_api_key">Utiliser la clé API par défaut</string>
+    <string name="set_api_key">Définir la clé API:</string>
+    <string name="apiTitle">Définir la clé API</string>
+    <string name="savedAPIKey">Clé API enregistrée</string>
 
 </resources>

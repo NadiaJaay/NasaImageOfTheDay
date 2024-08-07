@@ -1,7 +1,9 @@
 package com.example.nasaimageoftheday;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import java.util.TimeZone;
 
 public class MainActivity extends BaseActivity {
     static final int DATE_REQUEST = 0;
+    String savedApiKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +35,15 @@ public class MainActivity extends BaseActivity {
             return insets;
         });
 
-        // Set the title of the Toolbar
+        String savedApiKey;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        savedApiKey = prefs.getString("api_key", "");
+        if (savedApiKey.isEmpty()) {
+            Intent intent = new Intent(this, SetApiKeyActivity.class);
+            startActivity(intent);
+        }
+
+            // Set the title of the Toolbar
         if (getSupportActionBar() != null) getSupportActionBar().setTitle(this.getResources().getString(R.string.homeTitle));
 
         // Declare Views

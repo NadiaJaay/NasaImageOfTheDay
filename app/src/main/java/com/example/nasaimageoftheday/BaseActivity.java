@@ -89,6 +89,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 clearFlags(intent);
                 startActivity(intent);
             }
+        } else if (id == R.id.navApiSetting) {
+            if (!(this instanceof SetApiKeyActivity)) {
+                Intent intent = new Intent(this, SetApiKeyActivity.class);
+                clearFlags(intent);
+                startActivity(intent);
+            }
         } else if (id == R.id.navExit) {
             finishAffinity();
         }

@@ -1,6 +1,7 @@
 package com.example.nasaimageoftheday;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -177,9 +178,17 @@ public class ImageActivity extends BaseActivity {
             InputStream response;
             String explanation, title, sdUrl;
 
+            String savedApiKey;
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            savedApiKey = prefs.getString("api_key", "");
+            if (savedApiKey.isEmpty()) {
+                Intent intent = new Intent(this, SetApiKeyActivity.class);
+                startActivity(intent);
+            }
+
             try {
                 // Open a connection to the NASA API
-                URL url = new URL("https://api.nasa.gov/planetary/apod?api_key="+BuildConfig.NASA_KEY+"&date="+date);
+                URL url = new URL("https://api.nasa.gov/planetary/apod?api_key="+savedApiKey+"&date="+date);
                 connection = (HttpURLConnection) url.openConnection();
                 response = connection.getInputStream();
 
