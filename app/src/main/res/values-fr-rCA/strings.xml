@@ -4,6 +4,8 @@
     <string name="dialogNeutralBtn">OK</string>
     <string name="btnConfirm">Confirmer</string>
     <string name="versionNumber">numéro de version: v</string>
+    <string name="dateFormat">dd MMM, yyyy</string>
+    <string name="undoBtn">Annuler</string>
 
     <!--    Navigation Drawer -->
     <string name="navHome">Accueil</string>
@@ -16,7 +18,7 @@
     <!--  Toolbar  -->
     <string name="navTodayImage">Image du jour</string>
     <string name="navHelp">Aide</string>
-    <string name="imageActivityDateTitle">Image de </string>
+    <string name="imageActivityDateTitle">Image du </string>
 
     <!--  Image Activity  -->
     <string name="viewHDInBrowser">Voir dans votre navigateur</string>
@@ -50,6 +52,7 @@
     <string name="savedImagesActivityTitle">Vos images</string>
     <string name="savedImageDate">Date créée: </string>
     <string name="savedImageSize">Taille du fichier: </string>
+    <string name="contentDescription">Image sauvegardée</string>
 
     <!--  Saved Images Dialog  -->
     <string name="savedImagesDialogTitle">Aide | Activité Vos Images</string>

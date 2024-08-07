@@ -3,6 +3,8 @@
     <string name="dialogNeutralBtn">OK</string>
     <string name="btnConfirm">Confirm</string>
     <string name="versionNumber">version number: v</string>
+    <string name="dateFormat">MMM dd, yyyy</string>
+    <string name="undoBtn">Undo</string>
 
     <!--    Navigation Drawer -->
     <string name="navHome">Home</string>
@@ -49,6 +51,7 @@
     <string name="savedImagesActivityTitle">Your Saved Images</string>
     <string name="savedImageDate">Date created: </string>
     <string name="savedImageSize">File size: </string>
+    <string name="contentDescription">Saved Image</string>
 
     <!--  Saved Images Dialog  -->
     <string name="savedImagesDialogTitle">Help | Saved Images Activity</string>
