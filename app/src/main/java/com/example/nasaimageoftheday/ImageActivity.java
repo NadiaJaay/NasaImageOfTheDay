@@ -2,6 +2,7 @@ package com.example.nasaimageoftheday;
 import android.content.ContentValues;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -172,7 +175,13 @@ public class ImageActivity extends BaseActivity {
 
         });
 
-
+        String savedApiKey;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        savedApiKey = prefs.getString("api_key", "");
+        if (savedApiKey.isEmpty()) {
+            Intent intent = new Intent(this, SetApiKeyActivity.class);
+            startActivity(intent);
+        }
 
         /* This replaces AsyncTask (doInBackground) that we learned in Lab 6
          * Uses a Single Thread Executor instead
@@ -187,7 +196,7 @@ public class ImageActivity extends BaseActivity {
 
             try {
                 // Open a connection to the NASA API
-                URL url = new URL("https://api.nasa.gov/planetary/apod?api_key="+BuildConfig.NASA_KEY+"&date="+date);
+                URL url = new URL("https://api.nasa.gov/planetary/apod?api_key="+savedApiKey+"&date="+date);
                 connection = (HttpURLConnection) url.openConnection();
                 response = connection.getInputStream();
 

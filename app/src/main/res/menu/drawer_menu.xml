@@ -20,11 +20,17 @@
         android:icon="@drawable/calendar"
         android:orderInCategory="2"
         />
+    <item
+        android:id="@+id/navApiSetting"
+        android:title="@string/navApiSetting"
+        android:icon="@drawable/settings_gear"
+        android:orderInCategory="3"
+        />
 
     <item
         android:id="@+id/navExit"
         android:title="@string/navExit"
         android:icon="@drawable/exit"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         />
 </menu>
