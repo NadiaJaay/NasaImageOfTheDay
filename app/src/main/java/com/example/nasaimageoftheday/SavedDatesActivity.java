@@ -1,11 +1,9 @@
 package com.example.nasaimageoftheday;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,21 +113,6 @@ public class SavedDatesActivity extends BaseActivity {
             );
         }
         adapter.notifyDataSetChanged();
-    }
-
-    // Todo: Setting own API key things?
-    private void saveDatesToPreferences() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        StringBuilder sb = new StringBuilder();
-        for (SavedDate date : savedDates) {
-            if (sb.length() > 0) {
-                sb.append(",");
-            }
-            sb.append(date.getTitle()).append(":").append(date.getDate());
-        }
-        editor.putString("saved_dates", sb.toString());
-        editor.apply();
     }
 
     /* Override toolbar item selection to update the "Help" button

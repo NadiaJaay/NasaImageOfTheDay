@@ -74,5 +74,10 @@
     <string name="set_api_key">Définir la clé API:</string>
     <string name="apiTitle">Définir la clé API</string>
     <string name="savedAPIKey">Clé API enregistrée</string>
+    <string name="wantYourOwn">Vous voulez votre propre clé API?</string>
+
+    <!--  Set API Key Activity Help Menu  -->
+    <string name="apiKeyHelpTitle">Aide | Activité Paramètres API</string>
+    <string name="apiKeyHelpMessage">Utilisez votre propre clé API de la NASA APOD. Entrez votre clé dans la boîte. Alternativement, cliquez sur le bouton \"Utiliser la clé par défaut\" afin d\'utiliser la clé déjà inscrite. Lorsque vous êtes prêts, cliquez sur \"Confirmer\" afin de la sauvegarder dans votre appareil.</string>
 
 </resources>

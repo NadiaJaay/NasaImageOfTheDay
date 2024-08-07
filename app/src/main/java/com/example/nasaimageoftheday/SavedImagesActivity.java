@@ -63,7 +63,6 @@ public class SavedImagesActivity extends BaseActivity {
             }
         }
         // Add all HashMap entries to the ArrayList, then sort the array by last date modified (oldest image first).
-        // TODO: Make it newest image first? (optional)
         data.addAll(pictureList.entrySet());
         data.sort(Comparator.comparingLong(a -> a.getKey().lastModified()));
 
@@ -72,7 +71,6 @@ public class SavedImagesActivity extends BaseActivity {
 
         /* On Click Listener
          * Show and alert dialog with the date the image was saved, and the file size.
-         * TODO: Show the image in a new activity with those details instead? (optional)
          *
          */
         gridView.setOnItemClickListener((p, b, pos, id) -> {
