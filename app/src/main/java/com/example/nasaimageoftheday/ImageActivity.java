@@ -53,7 +53,7 @@ public class ImageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image); // Overriden by BaseActivity
+        setContentView(R.layout.activity_image); // Overridden by BaseActivity
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -83,9 +83,9 @@ public class ImageActivity extends BaseActivity {
         // Change the title of the action bar depending on date.
         LocalDate date;
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
+        if (bundle != null && !LocalDate.parse(bundle.getString("date")).equals(LocalDate.now())) {
             date = LocalDate.parse(bundle.getString("date"));
-            if (getSupportActionBar() != null) getSupportActionBar().setTitle(this.getResources().getString(R.string.imageActivityDateTitle)+" "+date.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
+            if (getSupportActionBar() != null) getSupportActionBar().setTitle(this.getResources().getString(R.string.imageActivityDateTitle)+" "+date.format(DateTimeFormatter.ofPattern(getString(R.string.dateFormat))));
         } else {
             date = LocalDate.now();
             if (getSupportActionBar() != null) getSupportActionBar().setTitle(this.getResources().getString(R.string.navTodayImage));
@@ -136,7 +136,7 @@ public class ImageActivity extends BaseActivity {
 
                                 // Show a SnackBar. If they click "Undo", delete the file we just created.
                                 Snackbar.make(getActivityContainer(), getResources().getString(R.string.fileDownloaded), Snackbar.LENGTH_LONG)
-                                        .setAction("Undo", click -> file.delete())
+                                        .setAction(getString(R.string.undoBtn), click -> file.delete())
                                         .show();
                             } catch (IOException e) {
                                 // If error in saving, display toast with error.
