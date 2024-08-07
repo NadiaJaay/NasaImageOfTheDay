@@ -1,6 +1,5 @@
 package com.example.nasaimageoftheday;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -62,7 +61,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    // Getter method to get the activity container. Used for the Snackbar in the ImageActivity.
+    // Getter method to get the activity container. Used for the SnackBar in the ImageActivity.
     protected FrameLayout getActivityContainer() {return activityContainer;}
     protected boolean useToolbar() {return true;}
 
@@ -114,7 +113,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /* Default toolbar item selection menu behaviour.
-     * This is @overriden in each activity to override the "Help" button
+     * This is @overridden in each activity to override the "Help" button
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
