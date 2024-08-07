@@ -10,6 +10,7 @@
     <string name="navHome">Home</string>
     <string name="navSavedImages">Your Saved Images</string>
     <string name="navSavedDates">Your Saved Dates</string>
+    <string name="navApiSetting">API Setting</string>
     <string name="navExit">Exit</string>
     <string name="open">open</string>
     <string name="close">close</string>
@@ -66,5 +67,12 @@
     <string name="cancel">Cancel</string>
     <string name="savedDatesDialogMessage">Find a list of all your saved dates here. Hold your finger on the date to delete from your device</string>
     <string name="savedDateDialogTitle">Help | Saved Dates Activity</string>
+
+    <!--  Set API Key Activity -->
+    <string name="use_default_api_key">Use Default API Key</string>
+    <string name="set_api_key">Set API Key:</string>
+    <string name="apiTitle">Set API Key</string>
+    <string name="savedAPIKey">API Key Saved</string>
+
 
 </resources>

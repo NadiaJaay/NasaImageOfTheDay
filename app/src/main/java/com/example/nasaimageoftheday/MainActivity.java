@@ -1,7 +1,9 @@
 package com.example.nasaimageoftheday;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -28,6 +30,15 @@ public class MainActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        String savedApiKey;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        savedApiKey = prefs.getString("api_key", "");
+        if (savedApiKey.isEmpty()) {
+            Intent intent = new Intent(this, SetApiKeyActivity.class);
+            startActivity(intent);
+        }
+
 
         // Set the title of the Toolbar
         if (getSupportActionBar() != null) getSupportActionBar().setTitle(this.getResources().getString(R.string.homeTitle));
