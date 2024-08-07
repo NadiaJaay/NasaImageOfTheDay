@@ -73,6 +73,10 @@
     <string name="set_api_key">Set API Key:</string>
     <string name="apiTitle">Set API Key</string>
     <string name="savedAPIKey">API Key Saved</string>
+    <string name="wantYourOwn">Want your own API key?</string>
 
+    <!--  Set API Key Activity Help Menu  -->
+    <string name="apiKeyHelpTitle">Help | Set API Key Activity</string>
+    <string name="apiKeyHelpMessage">Set your own API key from NASA\'s APOD. Paste your API key in the text section. Alternatively, click the Use Default API key to use one that\'s already provided. When ready, click confirm to store it in your device.</string>
 
 </resources>

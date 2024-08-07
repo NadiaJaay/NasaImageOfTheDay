@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:layout_margin="20dp"
     tools:context=".SetApiKeyActivity">
 
     <TextView
@@ -13,23 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
         android:text="@string/set_api_key"
         app:layout_constraintTop_toTopOf="parent"
+        android:labelFor="@+id/api_key"
         />
 
     <EditText
         android:id="@+id/api_key"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:inputType="text"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <Button
         android:id="@+id/default_button"
@@ -37,7 +34,6 @@
         android:layout_height="wrap_content"
         android:text="@string/use_default_api_key"
         app:layout_constraintEnd_toStartOf="@id/confirm_button"
-        app:layout_constraintHorizontal_bias="0.855"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/api_key" />
 
@@ -45,10 +41,29 @@
         android:id="@+id/confirm_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
         android:text="@string/btnConfirm"
+        app:layout_constraintStart_toEndOf="@id/default_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/api_key" />
+
+    <TextView
+        android:id="@+id/wantYourOwnText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wantYourOwn"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/default_button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="https://api.nasa.gov/"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/wantYourOwnText"
+        app:layout_constraintTop_toBottomOf="@id/default_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

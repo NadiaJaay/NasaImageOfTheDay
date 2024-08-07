@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 public class MainActivity extends BaseActivity {
-    static final int DATE_REQUEST = 0;
+    static final int REQUEST = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
         savedApiKey = prefs.getString("api_key", "");
         if (savedApiKey.isEmpty()) {
             Intent intent = new Intent(this, SetApiKeyActivity.class);
-            startActivity(intent);
+            startActivityIfNeeded(intent, REQUEST);
         }
 
 
@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity {
             LocalDate selectedDate = LocalDate.of(year, month, day);
             Intent intent = new Intent(this, ImageActivity.class);
             intent.putExtra("date", String.valueOf(selectedDate));
-            startActivityIfNeeded(intent, DATE_REQUEST);
+            startActivityIfNeeded(intent, REQUEST);
         });
     }
 
@@ -81,8 +81,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == DATE_REQUEST) {
+        if (requestCode == REQUEST) {
             if (resultCode == 0) Toast.makeText(this, getString(R.string.noResultFound),Toast.LENGTH_SHORT).show();
+            if (resultCode == 1) Toast.makeText(this, getString(R.string.savedAPIKey),Toast.LENGTH_SHORT).show();
         }
     }
 }
